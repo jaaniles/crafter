@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import ProgressBar from "../ProgressBar";
 export default class Facility extends Component {
   renderProcessingStatus = () => {
     const { facility } = this.props;
@@ -9,36 +10,67 @@ export default class Facility extends Component {
 
     if (readyProucts.length < facility.requires.length) {
       return facility.processing.map((process, i) => (
-        <p key={`process${i}`}>
-          {process.name}, {process.duration > 0 ? `${Math.floor(process.duration)}s` : "Complete"}
-        </p>
+        <Processing key={`process${i}`}>
+          {`${process.duration > 0 ? "> processing.. " : "Complete: "}`}
+          {process.name}
+        </Processing>
       ));
     } else {
-      return <p>Ready for pickup</p>;
+      return <Processing>Ready for pickup</Processing>;
     }
+  };
+
+  renderProgressBar = () => {
+    const { facility } = this.props;
+
+    if (facility.processing.length < 1) {
+      return null;
+    }
+
+    const processingItem = facility.processing.find(product => product.duration > 0);
+
+    if (!processingItem || !processingItem.duration) {
+      return null;
+    }
+
+    const durationProgress = processingItem.duration / processingItem.maxDuration * 100;
+    return <ProgressBar progress={durationProgress} />;
   };
 
   render() {
     const { facility, handleFacilityClick } = this.props;
 
+    const processing = facility.processing.length > 0;
+
     return (
-      <FacilityContainer onClick={() => handleFacilityClick(facility)}>
+      <FacilityContainer onClick={() => handleFacilityClick(facility)} processing={processing}>
         {facility.name}
-        {this.renderProcessingStatus()}
+        <ProcessingStatus>{this.renderProcessingStatus()}</ProcessingStatus>
+        {this.renderProgressBar()}
       </FacilityContainer>
     );
   }
 }
 
 const FacilityContainer = styled.div`
-  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  background: gray;
-  padding: 8px;
+  width: 25%;
+  height: 100px;
+
+  background: none;
+  color: #3c3c3c;
+
+  border: ${props => (props.processing ? "2px solid #3c3c3c" : "2px dashed #3c3c3c")};
+  padding: 8px 24px;
   margin: 8px;
-
-  p {
-    font-size: 8px;
-    color: white;
-  }
+`;
+const ProcessingStatus = styled.div`
+  margin: 8px 0;
+`;
+const Processing = styled.p`
+  font-size: 12px;
 `;

@@ -13,6 +13,7 @@ function createWorkOrder(duration) {
   return {
     id: uuid(),
     item: createItem(items.sword),
+    maxDuration: duration,
     duration: duration
   };
 }

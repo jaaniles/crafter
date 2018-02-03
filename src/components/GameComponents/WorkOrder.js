@@ -1,37 +1,53 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import ProgressBar from "../ProgressBar";
+
 export default class WorkOrder extends Component {
   render() {
     const { workOrder, handleWorkOrderClick, inventory } = this.props;
 
     const completable = inventory.find(item => item.name === workOrder.item.name);
+    const durationProgress = workOrder.duration / workOrder.maxDuration * 100;
 
     return (
-      <Order completable={completable} onClick={() => handleWorkOrderClick(workOrder)}>
-        <h4>{workOrder.item.name}</h4>
-        {Math.floor(workOrder.duration)}s
-        {completable ? (
-          <p>Order ready! Click to collect</p>
-        ) : (
-          workOrder.item.requires.map((item, i) => <p key={`i${i}`}>{item.name}</p>)
-        )}
-      </Order>
+      <Container>
+        <ProgressBar progress={durationProgress} />
+        <Order completable={completable} onClick={() => handleWorkOrderClick(workOrder)}>
+          <WorkOrderTitle>{workOrder.item.name}</WorkOrderTitle>
+          {completable ? (
+            <p>Order ready! Click to collect</p>
+          ) : (
+            workOrder.item.requires.map((item, i) => (
+              <Requirement key={`i${i}`}>{item.name}</Requirement>
+            ))
+          )}
+        </Order>
+      </Container>
     );
   }
 }
 
-const Order = styled.div`
-  width: 100px;
+const Container = styled.div`
+  width: 150px;
+  margin: 0 8px;
+`;
+const WorkOrderTitle = styled.p`
+  font-size: 24px;
+  letter-spacing: 1px;
 
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #3c3c3c;
+`;
+const Order = styled.div`
   background: ${props => (props.completable ? "papaywhip" : "gray")};
   border: ${props => (props.completable ? "1px solid green" : "none")};
 
-  padding: 8px;
-  margin: 8px;
+  padding: 8px 16px;
 
-  p {
-    font-size: 8px;
-    color: white;
-  }
+  width: 100%;
+
+  text-align: left;
 `;
+const Requirement = styled.p``;

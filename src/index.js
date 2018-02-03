@@ -9,8 +9,8 @@ import { BrowserRouter } from "react-router-dom";
 import configureStore from "./store/configure-store";
 import * as reducers from "./ducks";
 
-import "./index.css";
 import "css-wipe/index.css";
+import "./index.css";
 
 const rootReducer = combineReducers(reducers);
 const store = configureStore(rootReducer);

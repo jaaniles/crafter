@@ -16,7 +16,8 @@ export default class InventoryItem extends Component {
 const Item = styled.div`
   width: 100px;
 
-  background: gray;
+  background: #3c3c3c;
+  color: white;
   padding: 8px;
   margin: 8px;
 

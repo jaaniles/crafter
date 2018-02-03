@@ -23,6 +23,12 @@ export default function workOrderReducer(state = defaultState, action) {
       return state.update("inventory", inventory =>
         inventory.filter(item => item.id !== payload.item.id)
       );
+    case "FACILITY_START_PROCESSING":
+      if (payload.resource.consumable) {
+        return state.update("inventory", inventory =>
+          inventory.filter(item => item.id !== payload.resource.id)
+        );
+      }
     default:
       return state;
   }

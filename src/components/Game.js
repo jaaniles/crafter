@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import Flex from "./Layout/Flex";
 
-import Facility from "./GameComponents/Facility";
 import WorkOrder from "./GameComponents/WorkOrder";
-import InventoryItem from "./GameComponents/InventoryItem";
+import ResourcesContainer from "./GameContainers/ResourcesContainer";
+import FacilitiesContainer from "./GameContainers/FacilitiesContainer";
+import InventoryContainer from "./GameContainers/InventoryContainer";
 
 const DELTA = 0.0167;
 
@@ -14,8 +15,8 @@ export default class Game extends Component {
 
   componentWillMount() {
     this.props.addWorkOrder(100);
-    this.props.addWorkOrder(200);
-    this.props.addWorkOrder(300);
+    this.props.addWorkOrder(100);
+    this.props.addWorkOrder(100);
 
     this.props.addResource("woodLog");
     this.props.addResource("ore");
@@ -23,6 +24,9 @@ export default class Game extends Component {
     this.props.addFacility("forge");
     this.props.addFacility("lumberjack");
     this.props.addFacility("anvil");
+
+    this.props.addFacility("forge");
+    this.props.addFacility("lumberjack");
 
     requestAnimationFrame(this.update);
   }
@@ -48,7 +52,7 @@ export default class Game extends Component {
     });
   };
 
-  handleResourceSelection = resource => {
+  resourceClick = resource => {
     const { selection } = this.state;
 
     if (!selection) {
@@ -91,7 +95,7 @@ export default class Game extends Component {
     const { selection } = this.state;
 
     return (
-      <div>
+      <GameContainer>
         <WorkOrdersContainer>
           {workOrders
             .filter(workOrder => workOrder.duration > 0)
@@ -104,62 +108,34 @@ export default class Game extends Component {
               />
             ))}
         </WorkOrdersContainer>
-        <ResourcesContainer>
-          {resources.map((resource, i) => (
-            <ResourceButton
-              key={`r${i}`}
-              selection={selection}
-              isSelected={selection && selection.id === resource.id}
-              onClick={() => this.handleResourceSelection(resource)}
-            >
-              {resource.name}
-            </ResourceButton>
-          ))}
-        </ResourcesContainer>
-        <FacilitiesContainer>
-          {facilities.map((facility, i) => (
-            <Facility key={`f${i}`} facility={facility} handleFacilityClick={this.facilityClick} />
-          ))}
-        </FacilitiesContainer>
-        <InventoryContainer>
-          {inventory.map((item, i) => (
-            <InventoryItem
-              handleItemClick={this.handleResourceSelection}
-              isSelected={selection && selection.id === item.id}
-              key={`item${i}`}
-              item={item}
-            />
-          ))}
-        </InventoryContainer>
-      </div>
+        <Container>
+          <FacilitiesContainer facilities={facilities} handleFacilityClick={this.facilityClick} />
+          <ResourcesContainer
+            selection={selection}
+            handleResourceClick={this.resourceClick}
+            resources={resources}
+          />
+        </Container>
+        <InventoryContainer
+          handleItemClick={this.resourceClick}
+          inventory={inventory}
+          selection={selection}
+        />
+      </GameContainer>
     );
   }
 }
 
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  padding: 16px;
-`;
-const WorkOrdersContainer = FlexRow.extend``;
-const ResourcesContainer = FlexRow.extend`
-  pointer-events: ${props => (props.disabled ? "none" : "initial")};
-`;
-const FacilitiesContainer = FlexRow.extend``;
-const InventoryContainer = FlexRow.extend`
+const GameContainer = Flex.extend`
   flex-direction: column;
-  backgrounf: #efefef;
 `;
+const WorkOrdersContainer = Flex.extend`
+  background: rgba(255, 255, 255, 0.8);
+`;
+const Container = GameContainer.extend`
+  margin-top: 32px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 16px;
 
-const ResourceButton = styled.button`
-  background: ${props => (props.selection ? "tomato" : "green")};
-  border: ${props => (props.isSelected ? "1px solid cyan" : "none")};
-
-  padding: 8px 16px;
-  margin: 16px;
-
-  outline: none;
-  cursor: pointer;
+  min-height: 500px;
 `;

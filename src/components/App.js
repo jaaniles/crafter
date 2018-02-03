@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
+import styled from "styled-components";
 
 import Game from "./containers/GameContainer";
 
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <Container>
         <Switch>
           <Route exact path="/" component={Game} />
         </Switch>
-      </div>
+      </Container>
     );
   }
 }
+
+const Container = styled.div`
+  color: #3c3c3c;
+`;

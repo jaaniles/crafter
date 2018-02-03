@@ -61,8 +61,8 @@ export default function workOrderReducer(state = defaultState, action) {
     case "FACILITY_START_PROCESSING":
       return state.update("facilities", facilities =>
         facilities.map(facility => {
-          if (facility.id === payload.id) {
-            return payload;
+          if (facility.id === payload.facility.id) {
+            return payload.facility;
           }
           return facility;
         })

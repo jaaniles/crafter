@@ -12,8 +12,11 @@ function createFacility(facility) {
 
 function startProcessingResource(facility, resource) {
   return {
-    ...facility,
-    processing: facility.processing.concat(resource)
+    facility: {
+      ...facility,
+      processing: facility.processing.concat(resource)
+    },
+    resource
   };
 }
 
@@ -29,8 +32,10 @@ function updateProcessing(facility, DELTA) {
   };
 
   return {
-    ...facility,
-    processing: Object.assign([], facility.processing, { [processIndex]: updatedProcess })
+    facility: {
+      ...facility,
+      processing: Object.assign([], facility.processing, { [processIndex]: updatedProcess })
+    }
   };
 }
 
@@ -49,6 +54,7 @@ function completeProcessing(facility) {
 function createProduct(product) {
   return {
     ...product,
+    maxDuration: product.duration,
     id: uuid()
   };
 }
