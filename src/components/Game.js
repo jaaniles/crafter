@@ -20,6 +20,9 @@ export default class Game extends Component {
 
     this.props.addResource("woodLog");
     this.props.addResource("ore");
+    this.props.addResource("ingot");
+    this.props.addResource("ore");
+    this.props.addResource("ore");
 
     this.props.addFacility("forge");
     this.props.addFacility("lumberjack");

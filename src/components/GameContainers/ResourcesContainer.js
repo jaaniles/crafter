@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import getGridArea from "../../utils/getGridArea";
 import Flex from "../Layout/Flex";
 
 //isSelected={selection && selection.id === resource.id}
@@ -13,6 +14,7 @@ export default class ResourcesContainer extends Component {
         {resources.map((resource, i) => (
           <ResourceButton
             key={`r${i}`}
+            gridArea={getGridArea(i)}
             onClick={() => handleResourceClick(resource)}
             selection={selection}
             isSelected={selection && selection.id === resource.id}
@@ -29,6 +31,8 @@ const ResourceButton = styled.button`
   background: ${props => (props.selection ? "#087E8B" : "#FF5A5F")};
   color: #3c3c3c;
 
+  grid-area: ${props => props.gridArea};
+
   text-transform: uppercase;
   letter-spacing: 1px;
 
@@ -44,5 +48,14 @@ const ResourceButton = styled.button`
   cursor: pointer;
 `;
 const Resources = Flex.extend`
-  justify-content: space-around;
+  display: grid;
+  grid-template-areas:
+    "topleft top topright"
+    "left middle right"
+    "bottomleft bottom bottomright";
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;

@@ -12,13 +12,20 @@ export default class FacilitiesContainer extends Component {
     return (
       <Facilities>
         {facilities.map((facility, i) => (
-          <Facility key={`f${i}`} facility={facility} handleFacilityClick={handleFacilityClick} />
+          <Facility
+            key={`f${i}`}
+            pullRight={i & 1}
+            facility={facility}
+            handleFacilityClick={handleFacilityClick}
+          />
         ))}
       </Facilities>
     );
   }
 }
 
-const Facilities = Flex.extend`
-  justify-content: space-between;
+const Facilities = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
 `;

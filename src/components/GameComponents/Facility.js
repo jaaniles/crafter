@@ -38,12 +38,16 @@ export default class Facility extends Component {
   };
 
   render() {
-    const { facility, handleFacilityClick } = this.props;
+    const { facility, handleFacilityClick, pullRight } = this.props;
 
     const processing = facility.processing.length > 0;
 
     return (
-      <FacilityContainer onClick={() => handleFacilityClick(facility)} processing={processing}>
+      <FacilityContainer
+        pullRight={pullRight}
+        onClick={() => handleFacilityClick(facility)}
+        processing={processing}
+      >
         {facility.name}
         <ProcessingStatus>{this.renderProcessingStatus()}</ProcessingStatus>
         {this.renderProgressBar()}
@@ -58,15 +62,17 @@ const FacilityContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 25%;
+  width: 50%;
   height: 100px;
 
   background: none;
   color: #3c3c3c;
 
   border: ${props => (props.processing ? "2px solid #3c3c3c" : "2px dashed #3c3c3c")};
-  padding: 8px 24px;
-  margin: 8px;
+
+  margin: 32px 0;
+
+  justify-self: ${props => (props.pullRight ? "end" : "initial")};
 `;
 const ProcessingStatus = styled.div`
   margin: 8px 0;
