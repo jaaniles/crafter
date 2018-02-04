@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 import Facility from "../GameComponents/Facility";
 
-import Flex from "../Layout/Flex";
-
 export default class FacilitiesContainer extends Component {
   render() {
     const { facilities, handleFacilityClick } = this.props;

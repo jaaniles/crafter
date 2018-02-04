@@ -29,6 +29,7 @@ export default function workOrderReducer(state = defaultState, action) {
           inventory.filter(item => item.id !== payload.resource.id)
         );
       }
+      return state;
     default:
       return state;
   }

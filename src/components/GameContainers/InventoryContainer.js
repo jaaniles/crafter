@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 
 import InventoryItem from "../GameComponents/InventoryItem";
 import Flex from "../Layout/Flex";

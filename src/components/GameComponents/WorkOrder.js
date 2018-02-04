@@ -25,6 +25,8 @@ export default class WorkOrder extends Component {
 const Container = styled.div`
   width: 150px;
   margin: 0 8px;
+
+  color: papayawhip;
 `;
 const WorkOrderTitle = styled.p`
   font-size: 24px;
@@ -32,7 +34,7 @@ const WorkOrderTitle = styled.p`
 
   padding-bottom: 8px;
   margin-bottom: 8px;
-  border-bottom: 1px solid #3c3c3c;
+  border-bottom: 1px solid papayawhip;
 `;
 const Order = styled.div`
   background: ${props => (props.completable ? "papaywhip" : "gray")};
@@ -44,4 +46,3 @@ const Order = styled.div`
 
   text-align: left;
 `;
-const Requirement = styled.p``;

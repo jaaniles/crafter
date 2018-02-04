@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import getGridArea from "../../utils/getGridArea";
 import Flex from "../Layout/Flex";
+import Icon from "../Icon";
 
 //isSelected={selection && selection.id === resource.id}
 export default class ResourcesContainer extends Component {
@@ -19,7 +20,7 @@ export default class ResourcesContainer extends Component {
             selection={selection}
             isSelected={selection && selection.id === resource.id}
           >
-            {resource.name}
+            <Icon icon={resource.icon} />
           </ResourceButton>
         ))}
       </Resources>
@@ -28,24 +29,25 @@ export default class ResourcesContainer extends Component {
 }
 
 const ResourceButton = styled.button`
-  background: ${props => (props.selection ? "#087E8B" : "#FF5A5F")};
   color: #3c3c3c;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   grid-area: ${props => props.gridArea};
 
   text-transform: uppercase;
   letter-spacing: 1px;
 
-  border: ${props => (props.isSelected ? "3px solid #FF5A5F" : "none")};
-
+  border: ${props => (props.isSelected ? "3px solid #FF5A5F" : "3px solid #3c3c3c")};
   border-radius: 100%;
-  width: 100px;
-  height: 100px;
-
-  margin: 16px;
+  width: 75px;
+  height: 75px;
 
   outline: none;
   cursor: pointer;
+  justify-self: center;
 `;
 const Resources = Flex.extend`
   display: grid;
@@ -53,9 +55,8 @@ const Resources = Flex.extend`
     "topleft top topright"
     "left middle right"
     "bottomleft bottom bottomright";
+  grid-template-columns: 80px 80px 80px;
+  grid-template-rows: 80px 80px 80px;
 
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin: -30% auto;
 `;
