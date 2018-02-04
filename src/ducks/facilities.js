@@ -15,7 +15,25 @@ export function addFacility(facility) {
 
 export function startProcessing(facility, selection) {
   const facilityIsFull = facility.processing.length >= facility.requires.length;
-  const validResource = facility.requires.filter(resource => resource.name === selection.name);
+
+  const validResource = facility.requires.filter(resource => {
+    if (resource.name !== selection.name) {
+      return false;
+    }
+
+    const amountNeeded = facility.requires.filter(resource => resource.name === selection.name)
+      .length;
+
+    const amountAlreadyProcessing = facility.processing.filter(
+      resource => resource.name === selection.name
+    ).length;
+
+    if (amountAlreadyProcessing < amountNeeded) {
+      return true;
+    }
+
+    return false;
+  });
 
   if (validResource.length < 1 || facilityIsFull) {
     return {

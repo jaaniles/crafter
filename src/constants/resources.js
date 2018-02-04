@@ -9,7 +9,8 @@ export default {
   },
   wood: {
     name: "Wood",
-    consumable: true
+    consumable: true,
+    duration: 5
   },
   ingot: {
     name: "Ingot",

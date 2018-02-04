@@ -14,7 +14,7 @@ export default {
   },
   anvil: {
     name: "Anvil",
-    requires: [resources.ingot, resources.ingot],
-    produces: [items.sword, items.sword]
+    requires: [resources.ingot, resources.wood],
+    produces: [items.sword]
   }
 };

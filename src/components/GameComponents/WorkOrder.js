@@ -15,13 +15,7 @@ export default class WorkOrder extends Component {
         <ProgressBar progress={durationProgress} />
         <Order completable={completable} onClick={() => handleWorkOrderClick(workOrder)}>
           <WorkOrderTitle>{workOrder.item.name}</WorkOrderTitle>
-          {completable ? (
-            <p>Order ready! Click to collect</p>
-          ) : (
-            workOrder.item.requires.map((item, i) => (
-              <Requirement key={`i${i}`}>{item.name}</Requirement>
-            ))
-          )}
+          {completable && <p>Order ready! Click to collect</p>}
         </Order>
       </Container>
     );
