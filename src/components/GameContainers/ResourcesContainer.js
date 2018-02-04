@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import KeyHandler, { KEYPRESS } from "react-key-handler";
 
+import KeyboardKey from "../KeyboardKey";
 import getGridArea from "../../utils/getGridArea";
 import Flex from "../Layout/Flex";
 import Icon from "../Icon";
+import getKey from "../../utils/getKey";
 
 //isSelected={selection && selection.id === resource.id}
 export default class ResourcesContainer extends Component {
@@ -13,29 +16,40 @@ export default class ResourcesContainer extends Component {
     return (
       <Resources>
         {resources.map((resource, i) => (
-          <ResourceButton
-            key={`r${i}`}
-            gridArea={getGridArea(i)}
-            onClick={() => handleResourceClick(resource)}
-            selection={selection}
-            isSelected={selection && selection.id === resource.id}
-          >
-            <Icon icon={resource.icon} />
-          </ResourceButton>
+          <GridItem key={`r${i}`} gridArea={getGridArea(i)}>
+            <ResourceButton
+              onClick={() => handleResourceClick(resource)}
+              selection={selection}
+              isSelected={selection && selection.id === resource.id}
+            >
+              <KeyHandler
+                keyEventName={KEYPRESS}
+                keyValue={getKey(i)}
+                onKeyHandle={() => handleResourceClick(resource)}
+              />
+              <Icon icon={resource.icon} />
+            </ResourceButton>
+            <KeyboardKey>
+              <span>{getKey(i)}</span>
+            </KeyboardKey>
+          </GridItem>
         ))}
       </Resources>
     );
   }
 }
 
+const GridItem = styled.div`
+  grid-area: ${props => props.gridArea};
+`;
+
 const ResourceButton = styled.button`
   color: #3c3c3c;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  grid-area: ${props => props.gridArea};
 
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -58,5 +72,8 @@ const Resources = Flex.extend`
   grid-template-columns: 80px 80px 80px;
   grid-template-rows: 80px 80px 80px;
 
-  margin: -30% auto;
+  width: 200px;
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
 `;

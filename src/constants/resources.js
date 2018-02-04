@@ -5,7 +5,7 @@ import LOGS_ICON from "../assets/icons/logs.png";
 
 export default {
   woodLog: {
-    name: "Wood logs",
+    name: "Oak",
     duration: 20,
     icon: OAK_ICON
   },

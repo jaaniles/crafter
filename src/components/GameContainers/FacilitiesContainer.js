@@ -13,6 +13,7 @@ export default class FacilitiesContainer extends Component {
           <Facility
             key={`f${i}`}
             pullRight={i & 1}
+            i={i}
             facility={facility}
             handleFacilityClick={handleFacilityClick}
           />

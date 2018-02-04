@@ -1,16 +1,28 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import KeyHandler, { KEYPRESS } from "react-key-handler";
 
 import Icon from "../Icon";
-
+import getInventoryKey from "../../utils/getInventoryKey";
+import KeyboardKey from "../KeyboardKey";
 export default class InventoryItem extends Component {
   render() {
-    const { item, handleItemClick, isSelected } = this.props;
+    const { item, handleItemClick, isSelected, i } = this.props;
 
     return (
-      <Item isSelected={isSelected} onClick={() => handleItemClick(item)}>
-        <Icon icon={item.icon} />
-      </Item>
+      <div>
+        <Item isSelected={isSelected} onClick={() => handleItemClick(item)}>
+          <KeyHandler
+            keyEventName={KEYPRESS}
+            keyValue={getInventoryKey(i)}
+            onKeyHandle={() => handleItemClick(item)}
+          />
+          <Icon icon={item.icon} />
+        </Item>
+        <KeyboardKey>
+          <span>{getInventoryKey(i)}</span>
+        </KeyboardKey>
+      </div>
     );
   }
 }

@@ -37,8 +37,9 @@ const WorkOrderTitle = styled.p`
   border-bottom: 1px solid papayawhip;
 `;
 const Order = styled.div`
-  background: ${props => (props.completable ? "papaywhip" : "gray")};
+  background: ${props => (props.completable ? "#73B843" : "gray")};
   border: ${props => (props.completable ? "1px solid green" : "none")};
+  color: ${props => (props.completable ? "white" : "inherit")};
 
   padding: 8px 16px;
 

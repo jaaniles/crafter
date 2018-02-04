@@ -15,6 +15,7 @@ export default class InventoryContainer extends Component {
             isSelected={selection && selection.id === item.id}
             key={`item${i}`}
             item={item}
+            i={i}
           />
         ))}
       </Inventory>

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import KeyHandler, { KEYPRESS } from "react-key-handler";
 
+import KeyboardKey from "../KeyboardKey";
 import ProgressBar from "../ProgressBar";
+import getFacilityKey from "../../utils/getFacilityKey";
 export default class Facility extends Component {
   renderProcessingStatus = () => {
     const { facility } = this.props;
@@ -38,7 +41,7 @@ export default class Facility extends Component {
   };
 
   render() {
-    const { facility, handleFacilityClick, pullRight } = this.props;
+    const { facility, handleFacilityClick, pullRight, i } = this.props;
 
     const processing = facility.processing.length > 0;
 
@@ -48,7 +51,15 @@ export default class Facility extends Component {
         onClick={() => handleFacilityClick(facility)}
         processing={processing}
       >
-        {facility.name}
+        <KeyHandler
+          keyEventName={KEYPRESS}
+          keyValue={getFacilityKey(i)}
+          onKeyHandle={() => handleFacilityClick(facility)}
+        />
+        <p>{facility.name}</p>
+        <KeyboardKey>
+          <span>{getFacilityKey(i)}</span>
+        </KeyboardKey>
         <ProcessingStatus>{this.renderProcessingStatus()}</ProcessingStatus>
         {this.renderProgressBar()}
       </FacilityContainer>
@@ -63,16 +74,14 @@ const FacilityContainer = styled.div`
   align-items: center;
 
   width: 50%;
-  height: 100px;
-
   background: none;
   color: #3c3c3c;
 
   border: ${props => (props.processing ? "2px solid #3c3c3c" : "2px dashed #3c3c3c")};
 
-  margin: 32px 0;
-
   justify-self: ${props => (props.pullRight ? "end" : "initial")};
+  margin: 32px 0;
+  padding: 8px 0;
 `;
 const ProcessingStatus = styled.div`
   margin: 8px 0;

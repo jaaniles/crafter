@@ -18,9 +18,9 @@ export default class Game extends Component {
     this.props.addWorkOrder(100);
     this.props.addWorkOrder(100);
 
+    this.props.addResource("ore");
     this.props.addResource("woodLog");
-    this.props.addResource("ore");
-    this.props.addResource("ore");
+    this.props.addResource("woodLog");
     this.props.addResource("ore");
 
     this.props.addFacility("forge");
